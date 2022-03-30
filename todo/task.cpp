@@ -1,14 +1,14 @@
 #include "task.h"
 
-Task::Task(int id, const QString& taskName = "Default Task", const QString& taskDescription = "", bool checked = false)
+
+Task::Task(const QString& id, const QString& taskName, const QString& taskDescription, bool checked)
     :
       id{id},
       taskName{taskName},
       taskDescription{taskDescription},
       checked{checked}
 {}
-
-int Task::getID() const
+QString Task::getID() const
 {
     return this->id;
 }

@@ -1,6 +1,6 @@
 #include "taskcategory.h"
 
-TaskCategory::TaskCategory(const QString& id, const QString& name = "Default Category", TaskInit args = {})
+TaskCategory::TaskCategory(const QString& id, const QString& name, TaskInit args)
     :
       id{id},
       name{name},
@@ -107,12 +107,12 @@ void TaskCategory::clear()
     return;
 }
 
-int TaskCategory::size()
+int TaskCategory::size() const
 {
     return tasks.size();
 }
 
-bool TaskCategory::empty()
+bool TaskCategory::empty() const
 {
     return this->size();
 }
