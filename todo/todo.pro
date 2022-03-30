@@ -11,12 +11,14 @@ CONFIG += c++11
 SOURCES += \
     main.cpp \
     mainwindow.cpp \
+    qgraphicsroundedrectitem.cpp \
     task.cpp \
     taskcategory.cpp \
     taskgraphicsview.cpp
 
 HEADERS += \
     mainwindow.h \
+    qgraphicsroundedrectitem.h \
     task.h \
     taskcategory.h \
     taskgraphicsview.h

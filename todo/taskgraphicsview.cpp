@@ -1,21 +1,23 @@
 #include "taskgraphicsview.h"
 
-/*
-    taskCatIterator begin();
-    taskCatIterator end();
-    constTaskCatIterator begin() const;
-    constTaskCatIterator end() const;
-*/
-
-TaskGraphicsView::TaskGraphicsView(QGraphicsScene* scene, QWidget* parent)
-    :
-      QGraphicsView(scene, parent)
-{}
-
 TaskGraphicsView::TaskGraphicsView(QWidget* parent)
     :
-      QGraphicsView(parent)
-{}
+      QGraphicsView(parent),
+      _metascene{new QGraphicsScene}
+{
+    _metascene->addItem(new QGraphicsRoundedRectItem(100,100,100,100,15,15));
+
+    this->setScene(_metascene);
+    this->show();
+
+}
+
+TaskGraphicsView::~TaskGraphicsView()
+{
+    if (_metascene != nullptr) delete _metascene;
+
+
+}
 
 taskCatIterator TaskGraphicsView::begin()
 {

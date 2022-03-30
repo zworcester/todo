@@ -9,6 +9,7 @@
 
 #include "task.h"
 #include "taskcategory.h"
+#include "qgraphicsroundedrectitem.h"
 
 typedef QVector<TaskCategory> TaskCatVector;
 typedef TaskCatVector::Iterator taskCatIterator;
@@ -18,8 +19,8 @@ class TaskGraphicsView : public QGraphicsView
 {
     Q_OBJECT
 public:
-    TaskGraphicsView(QGraphicsScene* scene, QWidget* parent);
     TaskGraphicsView(QWidget* parent);
+    ~TaskGraphicsView();
 
     taskCatIterator begin();
     taskCatIterator end();
@@ -36,6 +37,7 @@ public:
 
 private:
     QVector<TaskCategory> categories;
+    QGraphicsScene* _metascene;
 };
 
 #endif // TASKGRAPHICSVIEW_H
