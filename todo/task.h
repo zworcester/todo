@@ -8,9 +8,10 @@
 class Task
 {
 public:
-    Task(int id, const QString& taskName, const QString& taskDescription, bool checked);
-    
-    int getID() const;
+    Task(const QString& id, const QString& taskName = "Default Task", const QString& taskDescription = "", bool checked = false);
+
+
+    QString getID() const;
     QString getName() const;
     QString getDescription() const;
     bool isChecked() const;
@@ -21,7 +22,7 @@ public:
     void uncheck();
     
 private:
-    int id;
+    QString id;
     QString taskName;
     QString taskDescription;
     bool checked;

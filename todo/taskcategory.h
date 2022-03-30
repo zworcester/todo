@@ -22,7 +22,7 @@ class TaskCategory
 {
 public:
 
-    TaskCategory(const QString& id, const QString& name, TaskInit args);
+    TaskCategory(const QString& id, const QString& name = "Default Category", TaskInit args = {});
 
     taskIterator begin();
     taskIterator end();
@@ -49,8 +49,8 @@ public:
 
     void clear();
 
-    bool empty();
-    int size();
+    bool empty() const;
+    int size() const;
 
 
 private:
