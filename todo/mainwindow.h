@@ -2,8 +2,15 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QGraphicsScene>
+#include <QGraphicsLinearLayout>
+#include <QGraphicsWidget>
+#include <QPen>
+#include <QBrush>
+
 #include "task.h"
 #include "taskcategory.h"
+#include "qgraphicsroundedrectitem.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -19,5 +26,7 @@ public:
 
 private:
     Ui::MainWindow *ui;
+
+    QGraphicsScene metaScene;
 };
 #endif // MAINWINDOW_H

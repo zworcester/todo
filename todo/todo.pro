@@ -13,15 +13,13 @@ SOURCES += \
     mainwindow.cpp \
     qgraphicsroundedrectitem.cpp \
     task.cpp \
-    taskcategory.cpp \
-    taskgraphicsview.cpp
+    taskcategory.cpp
 
 HEADERS += \
     mainwindow.h \
     qgraphicsroundedrectitem.h \
     task.h \
-    taskcategory.h \
-    taskgraphicsview.h
+    taskcategory.h
 
 FORMS += \
     mainwindow.ui
