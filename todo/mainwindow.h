@@ -11,6 +11,7 @@
 #include "task.h"
 #include "taskcategory.h"
 #include "qgraphicsroundedrectitem.h"
+#include "taskgraphicswidget.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -24,9 +25,10 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+private slots:
 private:
     Ui::MainWindow *ui;
 
-    QGraphicsScene metaScene;
+    QGraphicsScene* metaScene;
 };
 #endif // MAINWINDOW_H

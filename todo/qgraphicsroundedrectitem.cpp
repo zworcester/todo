@@ -6,7 +6,9 @@ QGraphicsRoundedRectItem::QGraphicsRoundedRectItem(qreal x, qreal y, qreal w, qr
       rect{x,y,w,h},
       xRadius{xRadius},
       yRadius{yRadius}
-{}
+{
+    this->setGraphicsItem(this);
+}
 
 QGraphicsRoundedRectItem::QGraphicsRoundedRectItem(const QRectF& rect, qreal xRadius, qreal yRadius, QGraphicsItem* parent)
     :
@@ -14,7 +16,9 @@ QGraphicsRoundedRectItem::QGraphicsRoundedRectItem(const QRectF& rect, qreal xRa
       rect{rect},
       xRadius{xRadius},
       yRadius{yRadius}
-{}
+{
+    this->setGraphicsItem(this);
+}
 
 QGraphicsRoundedRectItem::QGraphicsRoundedRectItem(const QRect& rect, qreal xRadius, qreal yRadius, QGraphicsItem* parent)
     :
@@ -22,7 +26,9 @@ QGraphicsRoundedRectItem::QGraphicsRoundedRectItem(const QRect& rect, qreal xRad
       rect{rect},
       xRadius{xRadius},
       yRadius{yRadius}
-{}
+{
+    this->setGraphicsItem(this);
+}
 
 QGraphicsRoundedRectItem::QGraphicsRoundedRectItem(QGraphicsItem* parent)
     :
@@ -30,7 +36,9 @@ QGraphicsRoundedRectItem::QGraphicsRoundedRectItem(QGraphicsItem* parent)
       rect(QRectF(0,0,100,100)),
       xRadius(50),
       yRadius(50)
-{}
+{
+    this->setGraphicsItem(this);
+}
 
 void QGraphicsRoundedRectItem::setRect(const QRectF& rect, qreal xRadius, qreal yRadius)
 {
