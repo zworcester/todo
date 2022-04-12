@@ -7,14 +7,13 @@ Serializer::Serializer()
 
 QJsonDocument write(const QVector<TaskCategory>& taskCategories) {
     QJsonDocument theDocument;
-    QJsonArray theCategories;
-    QJsonObject theTasks;
 
 
     for (const auto& categories : taskCategories) {
+        QJsonArray theCategories;
 
         for (const auto& tasks : categories) {
-
+            QJsonObject theTasks;
         }
 
     }
