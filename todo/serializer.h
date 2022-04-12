@@ -2,6 +2,8 @@
 #define SERIALIZER_H
 
 #include <QJsonDocument>
+#include <QJsonArray>
+#include <QJsonObject>
 #include "taskcategory.h"
 
 class Serializer
@@ -10,7 +12,7 @@ public:
     Serializer();
 
 
-    QJsonDocument write(QVector<TaskCategory>& taskCategories);
+    QJsonDocument write(const QVector<TaskCategory>& taskCategories);
 };
 
 #endif // SERIALIZER_H
