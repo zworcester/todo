@@ -11,6 +11,7 @@ CONFIG += c++11
 SOURCES += \
     main.cpp \
     mainwindow.cpp \
+    parser.cpp \
     qgraphicsroundedrectitem.cpp \
     serializer.cpp \
     task.cpp \
@@ -19,6 +20,7 @@ SOURCES += \
 
 HEADERS += \
     mainwindow.h \
+    parser.h \
     qgraphicsroundedrectitem.h \
     serializer.h \
     task.h \
