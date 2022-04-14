@@ -11,12 +11,14 @@ CONFIG += c++11
 SOURCES += \
     main.cpp \
     mainwindow.cpp \
+    serializer.cpp \
     task.cpp \
     taskcategory.cpp \
     taskgraphicsview.cpp
 
 HEADERS += \
     mainwindow.h \
+    serializer.h \
     task.h \
     taskcategory.h \
     taskgraphicsview.h
