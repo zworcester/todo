@@ -6,16 +6,16 @@ Serializer::Serializer()
 }
 
 QJsonDocument write(const QVector<TaskCategory>& taskCategories) {
-    QJsonDocument theDocument;
-    QJsonArray theData;
+    QJsonDocument jsonDocument;
+    QJsonArray jsonData;
     QJsonObject mainObject;
 
 
     for (const auto& categories : taskCategories) {
-        QJsonObject theCategory;
+        QJsonObject jsonCategory;
         QJsonArray qTasks;
-        theCategory.insert("id", categories.getID());
-        theCategory.insert("name", categories.getName());
+        jsonCategory.insert("id", categories.getID());
+        jsonCategory.insert("name", categories.getName());
 
         for (const auto& tasks : categories) {
             QJsonObject taskData;
@@ -26,11 +26,11 @@ QJsonDocument write(const QVector<TaskCategory>& taskCategories) {
             qTasks.push_back(taskData);
         }
 
-        theCategory.insert("tasks", qTasks);
+        jsonCategory.insert("tasks", qTasks);
 
-        theData.push_back(theCategory);
-        mainObject.insert("categories", theData);
-        theDocument.setObject(mainObject);
+        jsonData.push_back(jsonCategory);
+        mainObject.insert("categories", jsonData);
+        jsonDocument.setObject(mainObject);
     }
-    return theDocument;
+    return jsonDocument;
 }
