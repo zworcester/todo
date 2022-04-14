@@ -11,17 +11,19 @@ CONFIG += c++11
 SOURCES += \
     main.cpp \
     mainwindow.cpp \
+    qgraphicsroundedrectitem.cpp \
     serializer.cpp \
     task.cpp \
     taskcategory.cpp \
-    taskgraphicsview.cpp
+    taskgraphicswidget.cpp
 
 HEADERS += \
     mainwindow.h \
+    qgraphicsroundedrectitem.h \
     serializer.h \
     task.h \
     taskcategory.h \
-    taskgraphicsview.h
+    taskgraphicswidget.h
 
 FORMS += \
     mainwindow.ui

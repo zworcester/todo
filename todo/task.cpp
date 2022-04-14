@@ -3,11 +3,12 @@
 
 Task::Task(const QString& id, const QString& taskName, const QString& taskDescription, bool checked)
     :
-      id{id},
-      taskName{taskName},
-      taskDescription{taskDescription},
-      checked{checked}
+      id(id),
+      taskName(taskName),
+      taskDescription(taskDescription),
+      checked(checked)
 {}
+
 QString Task::getID() const
 {
     return this->id;
