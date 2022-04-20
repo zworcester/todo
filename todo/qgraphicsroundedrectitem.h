@@ -7,6 +7,7 @@
 #include <QObject>
 #include <QWidget>
 #include <QPainter>
+#include <QDebug>
 
 class QGraphicsRoundedRectItem : public QGraphicsItem, public QGraphicsLayoutItem
 {
@@ -15,6 +16,7 @@ public:
     QGraphicsRoundedRectItem(const QRectF& rect, qreal xRadius, qreal yRadius, QGraphicsItem* parent=nullptr);
     QGraphicsRoundedRectItem(const QRect& rect, qreal xRadius, qreal yRadius, QGraphicsItem* parent=nullptr);
     QGraphicsRoundedRectItem(QGraphicsItem* parent = nullptr);
+    ~QGraphicsRoundedRectItem() {}
 
     void setRect(const QRectF& rect, qreal xRadius, qreal yRadius);
     void setRect(qreal x, qreal y, qreal width, qreal height, qreal xRadius, qreal yRadius);
@@ -34,6 +36,7 @@ public:
     void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget = nullptr) override;
     virtual QSizeF sizeHint(Qt::SizeHint which, const QSizeF& constraint = QSizeF()) const override;
     virtual void setGeometry(const QRectF& rect) override;
+
 private:
     QPen _pen;
     QBrush _brush;

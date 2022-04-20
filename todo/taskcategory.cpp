@@ -114,5 +114,5 @@ int TaskCategory::size() const
 
 bool TaskCategory::empty() const
 {
-    return this->size();
+    return tasks.empty();
 }

@@ -11,24 +11,33 @@ CONFIG += c++11
 SOURCES += \
     main.cpp \
     mainwindow.cpp \
+    newtaskdialog.cpp \
     parser.cpp \
     qgraphicsroundedrectitem.cpp \
+    qrandidgenerator.cpp \
     serializer.cpp \
     task.cpp \
     taskcategory.cpp \
+    taskeditorform.cpp \
     taskgraphicswidget.cpp
 
 HEADERS += \
+    baseidgenerator.h \
     mainwindow.h \
+    newtaskdialog.h \
     parser.h \
     qgraphicsroundedrectitem.h \
+    qrandidgenerator.h \
     serializer.h \
     task.h \
     taskcategory.h \
+    taskeditorform.h \
     taskgraphicswidget.h
 
 FORMS += \
-    mainwindow.ui
+    mainwindow.ui \
+    newtaskdialog.ui \
+    taskeditorform.ui
 
 TRANSLATIONS += \
     todo_en_US.ts

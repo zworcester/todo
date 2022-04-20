@@ -15,7 +15,7 @@ public:
     QString getName() const;
     QString getDescription() const;
     bool isChecked() const;
-    
+
     void setName(const QString& name);
     void setDescription(const QString& description);
     void check();
