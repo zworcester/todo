@@ -4,16 +4,14 @@
 #include <QList>
 #include <QRandomGenerator64>
 
-#include "baseidgenerator.h"
-
 typedef QList<QString> StringList;
 typedef StringList::Iterator StringListIterator;
 typedef StringList::ConstIterator constStringListIterator;
 
-class QRandIDGenerator : public BaseIDGenerator
+class QRandIDGenerator
 {
 public:
-    QRandIDGenerator() {}
+    QRandIDGenerator() : list() { }
     QRandIDGenerator(const StringList& loadFirst);
 
     StringListIterator begin();
@@ -21,7 +19,7 @@ public:
     constStringListIterator begin() const;
     constStringListIterator end() const;
 
-    virtual QString get();
+    QString get();
 
     void load(const QString& id);
     void load(const StringList& list);

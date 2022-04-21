@@ -9,27 +9,19 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
     , metaScene(new QGraphicsScene)
+    , form(nullptr)
 {
-    Parser p(testring);
-    p.read();
     ui->setupUi(this);
-    tasks = p.getReadDataVector();
-    form = new TaskEditorForm(&tasks);
-
     QObject::connect(ui->editorButton, &QPushButton::clicked, this, &MainWindow::editorButtonClicked);
 
 
-
-    TaskGraphicsWidget* taskGraphics = new TaskGraphicsWidget;
-    taskGraphics->setTasks(tasks);
-
-    metaScene->addItem(taskGraphics);
-
-    ui->graphicsView->setScene(metaScene);
-    ui->graphicsView->show();
+    Parser p(testring);
+    p.read();
 
 
-
+    loadTasks(p.getReadDataVector());
+    form = new TaskEditorForm();
+    QObject::connect(form, &TaskEditorForm::tasksSaved, this, &MainWindow::tasksChanged);
 
 }
 
@@ -42,6 +34,29 @@ MainWindow::~MainWindow()
 
 void MainWindow::editorButtonClicked()
 {
+    form->populateForms(this->tasks);
     form->show();
 }
 
+void MainWindow::loadTasks(QVector<TaskCategory> newTasks)
+{
+    this->tasks = newTasks;
+    metaScene->clear();
+    TaskGraphicsWidget* taskGraphics = new TaskGraphicsWidget;
+    taskGraphics->setTasks(tasks);
+
+    metaScene->addItem(taskGraphics);
+
+    ui->graphicsView->setScene(metaScene);
+    ui->graphicsView->show();
+
+    return;
+}
+
+
+void MainWindow::tasksChanged(QVector<TaskCategory> tasks)
+{
+    loadTasks(tasks);
+
+    return;
+}

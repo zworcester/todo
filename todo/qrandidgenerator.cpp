@@ -47,14 +47,8 @@ constStringListIterator QRandIDGenerator::end() const
 
 QString QRandIDGenerator::get()
 {
-    QString tempId;
-    do
-    {
-        tempId = QString::number(QRandomGenerator64::global()->generate()).rightJustified(20,QLatin1Char('0'));
+    QString tempId = QString::number(QRandomGenerator64::global()->generate()).rightJustified(20,QLatin1Char('0'));
 
-    }while (!list.contains(tempId));
-
-    this->list.append(tempId);
     return tempId;
 }
 

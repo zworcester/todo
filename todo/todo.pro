@@ -11,7 +11,6 @@ CONFIG += c++11
 SOURCES += \
     main.cpp \
     mainwindow.cpp \
-    newtaskdialog.cpp \
     parser.cpp \
     qgraphicsroundedrectitem.cpp \
     qrandidgenerator.cpp \
@@ -22,9 +21,7 @@ SOURCES += \
     taskgraphicswidget.cpp
 
 HEADERS += \
-    baseidgenerator.h \
     mainwindow.h \
-    newtaskdialog.h \
     parser.h \
     qgraphicsroundedrectitem.h \
     qrandidgenerator.h \
@@ -36,7 +33,6 @@ HEADERS += \
 
 FORMS += \
     mainwindow.ui \
-    newtaskdialog.ui \
     taskeditorform.ui
 
 TRANSLATIONS += \

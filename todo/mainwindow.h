@@ -12,6 +12,7 @@
 #include "task.h"
 #include "taskcategory.h"
 #include "qgraphicsroundedrectitem.h"
+#include "qrandidgenerator.h"
 #include "taskgraphicswidget.h"
 #include "parser.h"
 #include "taskeditorform.h"
@@ -28,8 +29,11 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+    void loadTasks(QVector<TaskCategory> tasks);
+
 private slots:
     void editorButtonClicked();
+    void tasksChanged(QVector<TaskCategory> tasks);
 
 private:
     Ui::MainWindow *ui;
