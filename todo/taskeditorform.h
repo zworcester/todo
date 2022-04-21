@@ -41,6 +41,8 @@ public slots:
     void cancelTaskChangeClicked();
     void confirmTaskChangeClicked();
     void editCategoryButtonClicked();
+    void deleteTaskButtonClicked();
+    void cancelCatChangeClicked();
 
 private:
     Ui::TaskEditorForm *ui;

@@ -20,7 +20,7 @@ void Parser::read(){
     qDebug()<<jsonObject;// used for debugging purposes --showing object-- delete later
 
     if (!jsonCategoriesArray.isEmpty()){// checks to see if it is not empty
-        for (auto category : jsonCategoriesArray){
+        for (QJsonValueRef&& category : jsonCategoriesArray){
             QJsonObject jsonCategoryObject = category.toObject();
             QString categoryId=jsonCategoryObject["id"].toString();
             QString categoryName=jsonCategoryObject["name"].toString();
@@ -29,7 +29,7 @@ void Parser::read(){
             TaskCategory categoryObject(categoryId, categoryName);
 
             if (!jsonTasksArray.isEmpty()){// checks to see if it is not empty
-                for (auto task : jsonTasksArray){
+                for (QJsonValueRef&& task : jsonTasksArray){
                     QJsonObject jsonTaskObject = task.toObject();
                     QString taskId=jsonTaskObject["id"].toString();
                     QString taskName=jsonTaskObject["name"].toString();

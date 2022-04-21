@@ -11,13 +11,13 @@ QJsonDocument write(const QVector<TaskCategory>& taskCategories) {
     QJsonObject mainObject;
 
 
-    for (const auto& categories : taskCategories) {
+    for (const TaskCategory& categories : taskCategories) {
         QJsonObject jsonCategory;
         QJsonArray qTasks;
         jsonCategory.insert("id", categories.getID());
         jsonCategory.insert("name", categories.getName());
 
-        for (const auto& tasks : categories) {
+        for (const Task& tasks : categories) {
             QJsonObject taskData;
             taskData.insert("id", tasks.getID());
             taskData.insert("name", tasks.getName());

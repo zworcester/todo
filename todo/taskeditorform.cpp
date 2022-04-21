@@ -17,6 +17,9 @@ TaskEditorForm::TaskEditorForm(QWidget *parent) :
     QObject::connect(ui->cancelTaskChange, &QPushButton::pressed, this, &TaskEditorForm::cancelTaskChangeClicked);
     QObject::connect(ui->confirmTaskChange, &QPushButton::pressed, this, &TaskEditorForm::confirmTaskChangeClicked);
     QObject::connect(ui->editCategoryButton, &QPushButton::pressed, this, &TaskEditorForm::editCategoryButtonClicked);
+    QObject::connect(ui->deleteTaskButton, &QPushButton::pressed, this, &TaskEditorForm::deleteTaskButtonClicked);
+    QObject::connect(ui->catCancelButton, &QPushButton::pressed, this, &TaskEditorForm::cancelCatChangeClicked);
+
 
 }
 
@@ -198,4 +201,37 @@ void TaskEditorForm::confirmTaskChangeClicked()
 void TaskEditorForm::editCategoryButtonClicked()
 {
     currentCategory = &tempTasks[viewIDXtoTaskIDX[ui->viewList->currentRow()].first];
+
+    ui->catIDLabel->setText("<b>" + currentCategory->getID() + "</b>");
+    ui->categoryNameLineEdit->setText(currentCategory->getName());
+    ui->editorStack->setCurrentIndex(1);
+
+    for(const Task& task : *currentCategory)
+        ui->taskList->addItem(task.getName());
+}
+
+void TaskEditorForm::deleteTaskButtonClicked()
+{
+    if(ui->taskList->count() > 0)
+    {
+        if(ui->taskList->currentRow() < 0)
+        {
+            QMessageBox::information(this, "No Tasks Selected", "Select a task, then we'll talk.");
+        }
+        else
+        {
+            ui->taskList->takeItem(ui->taskList->currentRow());
+        }
+    }
+    else
+    {
+        QMessageBox::information(this, "No Tasks to Delete", "There is no task to delete.\nWhat do you want from me?");
+    }
+}
+
+void TaskEditorForm::cancelCatChangeClicked()
+{
+    currentCategory = nullptr;
+    ui->taskList->clear();
+    ui->editorStack->setCurrentIndex(0);
 }
