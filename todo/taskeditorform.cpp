@@ -19,8 +19,8 @@ TaskEditorForm::TaskEditorForm(QWidget *parent) :
     QObject::connect(ui->editCategoryButton, &QPushButton::pressed, this, &TaskEditorForm::editCategoryButtonClicked);
     QObject::connect(ui->deleteTaskButton, &QPushButton::pressed, this, &TaskEditorForm::deleteTaskButtonClicked);
     QObject::connect(ui->catCancelButton, &QPushButton::pressed, this, &TaskEditorForm::cancelCatChangeClicked);
-
-
+    QObject::connect(ui->addTaskButton, &QPushButton::pressed, this, &TaskEditorForm::addTaskButtonClicked);
+    QObject::connect(ui->catConfirmChangesButton, &QPushButton::pressed, this, &TaskEditorForm::catConfirmClicked);
 }
 
 TaskEditorForm::~TaskEditorForm()
@@ -49,9 +49,6 @@ void TaskEditorForm::populateForms(QVector<TaskCategory> tasks)
         {
             ui->viewList->addItem(t.getName());
             ++itemIdx;
-            //ui->viewList->item(itemIdx)->setData(1, QVariant('T'));
-            //ui->viewList->item(itemIdx)->setData(2, QVariant(categoryIdx));
-            //ui->viewList->item(itemIdx)->setData(3, QVariant(taskIdx));
             ui->viewList->item(itemIdx)->setFlags(Qt::ItemIsUserCheckable | Qt::ItemIsSelectable | Qt::ItemIsEnabled);
             ui->viewList->item(itemIdx)->setCheckState((t.isChecked() ? Qt::Checked : Qt::Unchecked));
             viewIDXtoTaskIDX.insert(itemIdx, QPair<int,int>(categoryIdx,taskIdx));
@@ -235,3 +232,43 @@ void TaskEditorForm::cancelCatChangeClicked()
     ui->taskList->clear();
     ui->editorStack->setCurrentIndex(0);
 }
+
+void TaskEditorForm::addTaskButtonClicked()
+{
+    if(ui->newTaskNameLineEdit->text().isEmpty())
+    {
+        QMessageBox::information(this, "Task Has No Name", "Give the task a name, or no dice.");
+    }
+    else
+    {
+        ui->taskList->addItem(ui->newTaskNameLineEdit->text());
+    }
+}
+
+void TaskEditorForm::catConfirmClicked()
+{
+    if(ui->categoryNameLineEdit->text().isEmpty())
+    {
+        QMessageBox::information(this, "Category Has No Name", "Give the Category a name, or no dice.");
+    }
+    else if(ui->taskList->count() < 1)
+    {
+        QMessageBox::information(this, "No Tasks", "Add at least one task to this category.");
+    }
+    else
+    {
+        currentCategory->setName(ui->categoryNameLineEdit->text());
+        currentCategory->clear();
+
+        for(int i = 0; i < ui->taskList->count(); ++i)
+        {
+            Task t("T_" + idGenerator->get());
+            currentCategory->append(t);
+        }
+
+        currentCategory = nullptr;
+        ui->taskList->clear();
+        ui->editorStack->setCurrentIndex(0);
+    }
+}
+

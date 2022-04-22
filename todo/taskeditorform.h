@@ -43,6 +43,8 @@ public slots:
     void editCategoryButtonClicked();
     void deleteTaskButtonClicked();
     void cancelCatChangeClicked();
+    void addTaskButtonClicked();
+    void catConfirmClicked();
 
 private:
     Ui::TaskEditorForm *ui;

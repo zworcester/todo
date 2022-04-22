@@ -13,6 +13,7 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     QObject::connect(ui->editorButton, &QPushButton::clicked, this, &MainWindow::editorButtonClicked);
+    QObject::connect(ui->actionQuit, &QAction::triggered, this, &MainWindow::quitActionTriggered);
 
 
     Parser p(testring);
@@ -59,4 +60,9 @@ void MainWindow::tasksChanged(QVector<TaskCategory> tasks)
     loadTasks(tasks);
 
     return;
+}
+
+void MainWindow::quitActionTriggered()
+{
+    QApplication::quit();
 }

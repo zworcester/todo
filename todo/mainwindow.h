@@ -35,6 +35,11 @@ private slots:
     void editorButtonClicked();
     void tasksChanged(QVector<TaskCategory> tasks);
 
+    void quitActionTriggered();
+    //void openActionTriggered();
+    //void saveActionTriggered();
+    //void newActionTriggered();
+
 private:
     Ui::MainWindow *ui;
 
