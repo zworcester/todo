@@ -1,5 +1,5 @@
 /* ----------------------------------------------------
- * Filename: taskeditorform.h
+ * Filename: qrandidgenerator.h
  * Project: Todo
  * Licence: GPL
  * ----------------------------------------------------

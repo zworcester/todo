@@ -1,5 +1,5 @@
 /* ----------------------------------------------------
- * Filename: taskeditorform.h
+ * Filename: taskcategory.cpp
  * Project: Todo
  * Licence: GPL
  * ----------------------------------------------------
