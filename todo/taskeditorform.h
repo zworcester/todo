@@ -81,13 +81,15 @@ public slots:
     // Listener for when the Category Change Confirm button pressed.
     void catConfirmClicked();
 
+    virtual void closeEvent(QCloseEvent* event) override;
+
 private:
     Ui::TaskEditorForm *ui;
 
     QVector<TaskCategory> tempTasks;
 
     QMap<int,QPair<int,int>> viewIDXtoTaskIDX;
-    QMap<QString,QString> tempDescriptions;
+    QMap<QString,QString> taskDescs;
 
     QRandIDGenerator* idGenerator;
 
