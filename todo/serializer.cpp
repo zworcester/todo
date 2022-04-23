@@ -5,7 +5,7 @@ Serializer::Serializer()
 
 }
 
-QJsonDocument write(const QVector<TaskCategory>& taskCategories) {
+QJsonDocument Serializer::write(const QVector<TaskCategory>& taskCategories) {
     QJsonDocument jsonDocument;
     QJsonArray jsonData;
     QJsonObject mainObject;

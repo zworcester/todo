@@ -15,13 +15,10 @@ MainWindow::MainWindow(QWidget *parent)
     QObject::connect(ui->editorButton, &QPushButton::clicked, this, &MainWindow::editorButtonClicked);
     QObject::connect(ui->actionQuit, &QAction::triggered, this, &MainWindow::quitActionTriggered);
     QObject::connect(ui->actionNew, &QAction::triggered, this, &MainWindow::newActionTriggered);
+    QObject::connect(ui->actionOpen, &QAction::triggered, this, &MainWindow::openActionTriggered);
+    QObject::connect(ui->actionSave, &QAction::triggered, this, &MainWindow::saveActionTriggered);
 
 
-    Parser p(testring);
-    p.read();
-
-
-    loadTasks(p.getReadDataVector());
     form = new TaskEditorForm();
     QObject::connect(form, &TaskEditorForm::tasksSaved, this, &MainWindow::tasksChanged);
 
@@ -86,5 +83,50 @@ void MainWindow::openActionTriggered()
     QFileDialog fDO(this, "Open a Todo List", QDir::currentPath(), "JSON files (*.json)");
     fDO.setFileMode(QFileDialog::ExistingFile);
     fDO.setAcceptMode(QFileDialog::AcceptOpen);
+
+    if (fDO.exec())
+    {
+        QFile f(fDO.selectedFiles().at(0));
+
+        if(!f.open(QIODevice::ReadOnly))
+        {
+            QMessageBox::warning(this, "Error", "The file could not be opened.");
+        }
+
+        QString json;
+
+        while(!f.atEnd())
+        {
+            json += f.readLine() + '\n';
+        }
+
+        Parser p(json);
+        p.read();
+
+        loadTasks(p.getReadDataVector());
+    }
+
+}
+
+void MainWindow::saveActionTriggered()
+{
+    QFileDialog fDO(this, "Save a Todo List", QDir::currentPath(), "JSON file (*.json)");
+    fDO.setFileMode(QFileDialog::AnyFile);
+    fDO.setAcceptMode(QFileDialog::AcceptSave);
+
+    if (fDO.exec())
+    {
+        QFile f(fDO.selectedFiles().at(0));
+
+        if(!f.open(QIODevice::WriteOnly))
+        {
+            QMessageBox::warning(this, "Error", "The file could not be made.");
+        }
+
+
+        Serializer s;
+        QJsonDocument d = s.write(tasks);
+        f.write(d.toJson());
+    }
 
 }

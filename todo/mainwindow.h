@@ -5,11 +5,14 @@
 #include <QGraphicsScene>
 #include <QGraphicsLinearLayout>
 #include <QGraphicsWidget>
+#include <QVector>
+#include <QJsonDocument>
 #include <QPen>
 #include <QBrush>
 #include <QSignalMapper>
 #include <QMessageBox>
 #include <QFileDialog>
+#include <QFile>
 
 #include "task.h"
 #include "taskcategory.h"
@@ -17,6 +20,7 @@
 #include "qrandidgenerator.h"
 #include "taskgraphicswidget.h"
 #include "parser.h"
+#include "serializer.h"
 #include "taskeditorform.h"
 
 QT_BEGIN_NAMESPACE
@@ -39,7 +43,7 @@ private slots:
 
     void quitActionTriggered();
     void openActionTriggered();
-    //void saveActionTriggered();
+    void saveActionTriggered();
     void newActionTriggered();
 
 private:
