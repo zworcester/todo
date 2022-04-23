@@ -1,13 +1,24 @@
-#ifndef PARSER_H
-#define PARSER_H
-
-/* Parser is a class used to build a QVector<TaskCategory> from a json string.
+/* ----------------------------------------------------
+ * Filename: Parser.h
+ * Project: Todo
+ * Licence: GPL
+ * ----------------------------------------------------
+ * Date of Last Edit:
+ * APRIL 22nd, 2022
+ * Last Edit: Desirae Prather (DesiraePrather@fullerton.edu)
+ * Editors:
+ *  Desirae Prather (DesiraePrather@fullerton.edu)
+ * ----------------------------------------------------
+ * Description:
+ * Parser is a class used to build a QVector<TaskCategory> from a json string.
  * This class is needed in order to provide the json information of saved to-do
  * lists that will be used in the window display. It contains the variables
  * jsonString and dataVector which is used to store all the read() TaskCategories.
  * It contains the functions setJsonString(QString jsonString),
  * getReadDataVector(), and read().
  */
+#ifndef PARSER_H
+#define PARSER_H
 
 #include <QVector>
 #include <QString>
