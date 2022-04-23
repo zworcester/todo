@@ -262,12 +262,13 @@ void TaskEditorForm::catConfirmClicked()
 
         for(int i = 0; i < ui->taskList->count(); ++i)
         {
-            Task t("T_" + idGenerator->get());
+            Task t("T_" + idGenerator->get(), ui->taskList->item(i)->text());
             currentCategory->append(t);
         }
 
         currentCategory = nullptr;
         ui->taskList->clear();
+        populateForms(this->tempTasks);
         ui->editorStack->setCurrentIndex(0);
     }
 }

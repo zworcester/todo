@@ -14,6 +14,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     QObject::connect(ui->editorButton, &QPushButton::clicked, this, &MainWindow::editorButtonClicked);
     QObject::connect(ui->actionQuit, &QAction::triggered, this, &MainWindow::quitActionTriggered);
+    QObject::connect(ui->actionNew, &QAction::triggered, this, &MainWindow::newActionTriggered);
 
 
     Parser p(testring);
@@ -65,4 +66,25 @@ void MainWindow::tasksChanged(QVector<TaskCategory> tasks)
 void MainWindow::quitActionTriggered()
 {
     QApplication::quit();
+}
+
+void MainWindow::newActionTriggered()
+{
+    if(!this->tasks.empty())
+    {
+        QMessageBox::StandardButton answer = QMessageBox::question(this, "Are You Sure?", "Would you like to create a new file?\nAny unsaved changes will be discarded.");
+
+        if (answer == QMessageBox::Yes)
+        {
+            loadTasks(QVector<TaskCategory>());
+        }
+    }
+}
+
+void MainWindow::openActionTriggered()
+{
+    QFileDialog fDO(this, "Open a Todo List", QDir::currentPath(), "JSON files (*.json)");
+    fDO.setFileMode(QFileDialog::ExistingFile);
+    fDO.setAcceptMode(QFileDialog::AcceptOpen);
+
 }

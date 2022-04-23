@@ -8,6 +8,8 @@
 #include <QPen>
 #include <QBrush>
 #include <QSignalMapper>
+#include <QMessageBox>
+#include <QFileDialog>
 
 #include "task.h"
 #include "taskcategory.h"
@@ -36,9 +38,9 @@ private slots:
     void tasksChanged(QVector<TaskCategory> tasks);
 
     void quitActionTriggered();
-    //void openActionTriggered();
+    void openActionTriggered();
     //void saveActionTriggered();
-    //void newActionTriggered();
+    void newActionTriggered();
 
 private:
     Ui::MainWindow *ui;
