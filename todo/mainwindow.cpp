@@ -18,7 +18,6 @@ MainWindow::MainWindow(QWidget *parent)
     QObject::connect(ui->actionOpen, &QAction::triggered, this, &MainWindow::openActionTriggered);
     QObject::connect(ui->actionSave, &QAction::triggered, this, &MainWindow::saveActionTriggered);
 
-
     form = new TaskEditorForm();
     QObject::connect(form, &TaskEditorForm::tasksSaved, this, &MainWindow::tasksChanged);
 

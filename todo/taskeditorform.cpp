@@ -1,3 +1,14 @@
+/* ----------------------------------------------------
+ * Filename: taskeditorform.cpp
+ * Project: Todo
+ * Licence: GPL
+ * ----------------------------------------------------
+ * Date of Last Edit:
+ * APRIL 22nd, 2022
+ * Last Edit: Zachary Worcester (zworcester0@fullerton.edu
+ * ----------------------------------------------------
+ */
+
 #include "taskeditorform.h"
 #include "ui_taskeditorform.h"
 
@@ -28,6 +39,8 @@ TaskEditorForm::~TaskEditorForm()
     delete ui;
 }
 
+// Populate all forms in the initital editor screen with
+// data from the given task vector.
 void TaskEditorForm::populateForms(QVector<TaskCategory> tasks)
 {
     tempTasks = tasks;
@@ -40,13 +53,11 @@ void TaskEditorForm::populateForms(QVector<TaskCategory> tasks)
     int itemIdx = 0;
     int categoryIdx = 0;
 
-    for (TaskCategory& tC : this->tempTasks)
-    {
+    for (TaskCategory& tC : this->tempTasks) {
         ui->viewList->addItem(tC.getName());
         viewIDXtoTaskIDX.insert(itemIdx, QPair<int,int>(categoryIdx,-1));
         int taskIdx = 0; 
-        for(const Task& t : tC)
-        {
+        for(const Task& t : tC) {
             ui->viewList->addItem(t.getName());
             ++itemIdx;
             ui->viewList->item(itemIdx)->setFlags(Qt::ItemIsUserCheckable | Qt::ItemIsSelectable | Qt::ItemIsEnabled);
@@ -60,67 +71,63 @@ void TaskEditorForm::populateForms(QVector<TaskCategory> tasks)
 
 }
 
+// Slot for when the user selects a row in the main category/task view
+// list.
 void TaskEditorForm::viewListRowChanged(int row)
 {
-    if (tempTasks.size() > 0)
-    {
-        if(viewIDXtoTaskIDX[row].second == -1)
-        {
+    if (tempTasks.size() > 0) {
+        if(viewIDXtoTaskIDX[row].second == -1) {
             ui->listViewStack->setCurrentIndex(0);
             TaskCategory temp = tempTasks[viewIDXtoTaskIDX[row].first];
             ui->catDescLabel->setText("Category ID: <b>" + temp.getID() + "</b>");
         }
-        else
-        {
+        else {
            ui->listViewStack->setCurrentIndex(1);
            Task temp = tempTasks[viewIDXtoTaskIDX[row].first][viewIDXtoTaskIDX[row].second];
            ui->taskDescLabel->setText("Task ID: <b>" + temp.getID() + "</b><br/>Description: " + temp.getDescription());
         }
     }
-    else
-    {
+    else {
         ui->listViewStack->setCurrentIndex(0);
         ui->catDescLabel->setText("No Categories.");
     }
 }
 
+// Slot for when the user changes an item in the category/task view list.
 void TaskEditorForm::viewListItemChanged(QListWidgetItem* item)
 {
     int itemIDX = ui->viewList->row(item);
 
-    if (viewIDXtoTaskIDX[itemIDX].second != -1)
-    {
+    if (viewIDXtoTaskIDX[itemIDX].second != -1) {
         bool checkState = item->checkState() == Qt::Checked ? true : false;
-        if (checkState)
-        {
+        if (checkState) {
             tempTasks[viewIDXtoTaskIDX[itemIDX].first][viewIDXtoTaskIDX[itemIDX].second].check();
         }
-        else
-        {
+        else {
             tempTasks[viewIDXtoTaskIDX[itemIDX].first][viewIDXtoTaskIDX[itemIDX].second].uncheck();
         }
     }
 }
 
+// Listener for when the Save Changes button pressed.
 void TaskEditorForm::saveChangesClicked()
 {
     QMessageBox::StandardButton answer = QMessageBox::question(this, "Are You Sure", "Are you sure you would like to save your changes?\nThis cannot be undone.", QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
 
-    if(answer == QMessageBox::Yes)
-    {
+    if(answer == QMessageBox::Yes) {
         emit tasksSaved(tempTasks);
         this->hide();
     }
 }
 
+// Listener for when the Delete Category button pressed.
 void TaskEditorForm::deleteCategoryClicked()
 {
     int categoryRow = viewIDXtoTaskIDX[ui->viewList->row(ui->viewList->currentItem())].first;
     QString categoryName = tempTasks[categoryRow].getName();
     QMessageBox::StandardButton answer = QMessageBox::question(this, "Are You Sure", "Are you sure you would like to delete " + categoryName + "?\nThis cannot be undone.", QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
 
-    if(answer == QMessageBox::Yes)
-    {
+    if(answer == QMessageBox::Yes) {
         ui->viewList->setCurrentRow(-1);
         ui->listViewStack->setCurrentIndex(0);
         ui->catDescLabel->setText(("Category ID: <b>None Selected</b>"));
@@ -131,6 +138,7 @@ void TaskEditorForm::deleteCategoryClicked()
     }
 }
 
+// Listener for when the Add Category button pressed.
 void TaskEditorForm::addCategoryClicked()
 {
     TaskCategory tempCat("C_" + idGenerator->get(), "New Category");
@@ -143,11 +151,13 @@ void TaskEditorForm::addCategoryClicked()
     populateForms(tempTasks);
 }
 
+// Listener for when the Exit Without Save button pressed.
 void TaskEditorForm::exitWithoutSaveClicked()
 {
     this->close();
 }
 
+// Listener for when the Edit Task button pressed.
 void TaskEditorForm::editTaskClicked()
 {
     currentTask = &tempTasks[viewIDXtoTaskIDX[ui->viewList->currentRow()].first][viewIDXtoTaskIDX[ui->viewList->currentRow()].second];
@@ -159,32 +169,29 @@ void TaskEditorForm::editTaskClicked()
     ui->editorStack->setCurrentIndex(2);
 }
 
+// Listener for when the Cancel Task Change button pressed.
 void TaskEditorForm::cancelTaskChangeClicked()
 {
     currentTask = nullptr;
     ui->editorStack->setCurrentIndex(0);
 }
 
+// Listener for when the Confirm Task Change button pressed.
 void TaskEditorForm::confirmTaskChangeClicked()
 {
-    if(ui->taskNameLineEdit->text().isEmpty())
-    {
+    if(ui->taskNameLineEdit->text().isEmpty()) {
         QMessageBox::information(this,"No Name", "A task must have a name.\nWhat is wrong with you?");
     }
-    else
-    {
+    else {
         QMessageBox::StandardButton answer = QMessageBox::question(this, "Are You Sure", "Are you sure you would like to save the changes to " + currentTask->getName() + "?\nThis cannot be undone.", QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
 
-        if(answer == QMessageBox::Yes)
-        {
+        if(answer == QMessageBox::Yes) {
             currentTask->setName(ui->taskNameLineEdit->text());
             currentTask->setDescription(ui->taskDescTextEdit->document()->toPlainText());
-            if(ui->checkedBox->checkState() == Qt::Checked)
-            {
+            if(ui->checkedBox->checkState() == Qt::Checked) {
                 currentTask->check();
             }
-            else
-            {
+            else {
                 currentTask->uncheck();
             }
 
@@ -195,6 +202,7 @@ void TaskEditorForm::confirmTaskChangeClicked()
     }
 }
 
+// Listener for when the Edit Category button pressed.
 void TaskEditorForm::editCategoryButtonClicked()
 {
     currentCategory = &tempTasks[viewIDXtoTaskIDX[ui->viewList->currentRow()].first];
@@ -207,25 +215,23 @@ void TaskEditorForm::editCategoryButtonClicked()
         ui->taskList->addItem(task.getName());
 }
 
+// Listener for when the Delete Task button pressed.
 void TaskEditorForm::deleteTaskButtonClicked()
 {
-    if(ui->taskList->count() > 0)
-    {
-        if(ui->taskList->currentRow() < 0)
-        {
+    if(ui->taskList->count() > 0) {
+        if(ui->taskList->currentRow() < 0) {
             QMessageBox::information(this, "No Tasks Selected", "Select a task, then we'll talk.");
         }
-        else
-        {
+        else {
             ui->taskList->takeItem(ui->taskList->currentRow());
         }
     }
-    else
-    {
+    else {
         QMessageBox::information(this, "No Tasks to Delete", "There is no task to delete.\nWhat do you want from me?");
     }
 }
 
+// Listener for when the Cancel Category Change button pressed.
 void TaskEditorForm::cancelCatChangeClicked()
 {
     currentCategory = nullptr;
@@ -233,35 +239,31 @@ void TaskEditorForm::cancelCatChangeClicked()
     ui->editorStack->setCurrentIndex(0);
 }
 
+// Listener for when the Add Task button pressed.
 void TaskEditorForm::addTaskButtonClicked()
 {
-    if(ui->newTaskNameLineEdit->text().isEmpty())
-    {
+    if(ui->newTaskNameLineEdit->text().isEmpty()) {
         QMessageBox::information(this, "Task Has No Name", "Give the task a name, or no dice.");
     }
-    else
-    {
+    else {
         ui->taskList->addItem(ui->newTaskNameLineEdit->text());
     }
 }
 
+// Listener for when the Category Change Confirm button pressed.
 void TaskEditorForm::catConfirmClicked()
 {
-    if(ui->categoryNameLineEdit->text().isEmpty())
-    {
+    if(ui->categoryNameLineEdit->text().isEmpty()) {
         QMessageBox::information(this, "Category Has No Name", "Give the Category a name, or no dice.");
     }
-    else if(ui->taskList->count() < 1)
-    {
+    else if(ui->taskList->count() < 1) {
         QMessageBox::information(this, "No Tasks", "Add at least one task to this category.");
     }
-    else
-    {
+    else {
         currentCategory->setName(ui->categoryNameLineEdit->text());
         currentCategory->clear();
 
-        for(int i = 0; i < ui->taskList->count(); ++i)
-        {
+        for(int i = 0; i < ui->taskList->count(); ++i) {
             Task t("T_" + idGenerator->get(), ui->taskList->item(i)->text());
             currentCategory->append(t);
         }
