@@ -46,6 +46,8 @@ public slots:
     void addTaskButtonClicked();
     void catConfirmClicked();
 
+    virtual void closeEvent(QCloseEvent* event) override;
+
 private:
     Ui::TaskEditorForm *ui;
 

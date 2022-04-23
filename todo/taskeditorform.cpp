@@ -115,19 +115,26 @@ void TaskEditorForm::saveChangesClicked()
 
 void TaskEditorForm::deleteCategoryClicked()
 {
-    int categoryRow = viewIDXtoTaskIDX[ui->viewList->row(ui->viewList->currentItem())].first;
-    QString categoryName = tempTasks[categoryRow].getName();
-    QMessageBox::StandardButton answer = QMessageBox::question(this, "Are You Sure", "Are you sure you would like to delete " + categoryName + "?\nThis cannot be undone.", QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
-
-    if(answer == QMessageBox::Yes)
+    if(ui->viewList->currentRow() < 0)
     {
-        ui->viewList->setCurrentRow(-1);
-        ui->listViewStack->setCurrentIndex(0);
-        ui->catDescLabel->setText(("Category ID: <b>None Selected</b>"));
-        ui->taskDescLabel->setText(("Task ID: <b>None Selected</b><br/>Description: <b>Default</b>"));
-        tempTasks.remove(categoryRow);
+        QMessageBox::information(this, "No Category Selected", "Select a category, dude.");
+    }
+    else
+    {
+        int categoryRow = viewIDXtoTaskIDX[ui->viewList->row(ui->viewList->currentItem())].first;
+        QString categoryName = tempTasks[categoryRow].getName();
+        QMessageBox::StandardButton answer = QMessageBox::question(this, "Are You Sure", "Are you sure you would like to delete " + categoryName + "?\nThis cannot be undone.", QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
 
-        populateForms(tempTasks);
+        if(answer == QMessageBox::Yes)
+        {
+            ui->viewList->setCurrentRow(-1);
+            ui->listViewStack->setCurrentIndex(0);
+            ui->catDescLabel->setText(("Category ID: <b>None Selected</b>"));
+            ui->taskDescLabel->setText(("Task ID: <b>None Selected</b><br/>Description: <b>Default</b>"));
+            tempTasks.remove(categoryRow);
+
+            populateForms(tempTasks);
+        }
     }
 }
 
@@ -197,17 +204,24 @@ void TaskEditorForm::confirmTaskChangeClicked()
 
 void TaskEditorForm::editCategoryButtonClicked()
 {
-    currentCategory = &tempTasks[viewIDXtoTaskIDX[ui->viewList->currentRow()].first];
+    if(ui->viewList->currentRow() < 0)
+    {
+        QMessageBox::information(this, "No Category Selected", "Select a category, dude.");
+    }
+    else
+    {
+        currentCategory = &tempTasks[viewIDXtoTaskIDX[ui->viewList->currentRow()].first];
 
-    for(const Task& t : *currentCategory)
-        taskDescs.insert(t.getName(), t.getDescription());
+        for(const Task& t : *currentCategory)
+            taskDescs.insert(t.getID(), t.getDescription());
 
-    ui->catIDLabel->setText("<b>" + currentCategory->getID() + "</b>");
-    ui->categoryNameLineEdit->setText(currentCategory->getName());
-    ui->editorStack->setCurrentIndex(1);
+        ui->catIDLabel->setText("<b>" + currentCategory->getID() + "</b>");
+        ui->categoryNameLineEdit->setText(currentCategory->getName());
+        ui->editorStack->setCurrentIndex(1);
 
-    for(const Task& task : *currentCategory)
-        ui->taskList->addItem(task.getName());
+        for(const Task& task : *currentCategory)
+            ui->taskList->addItem(task.getName());
+    }
 }
 
 void TaskEditorForm::deleteTaskButtonClicked()
@@ -284,5 +298,13 @@ void TaskEditorForm::catConfirmClicked()
         populateForms(this->tempTasks);
         ui->editorStack->setCurrentIndex(0);
     }
+}
+
+void TaskEditorForm::closeEvent(QCloseEvent* event)
+{
+    this->ui->editorStack->setCurrentIndex(0);
+    this->ui->listViewStack->setCurrentIndex(0);
+
+    QWidget::closeEvent(event);
 }
 
