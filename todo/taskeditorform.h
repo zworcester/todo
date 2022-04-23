@@ -52,6 +52,7 @@ private:
     QVector<TaskCategory> tempTasks;
 
     QMap<int,QPair<int,int>> viewIDXtoTaskIDX;
+    QMap<QString,QString> taskDescs;
 
     QRandIDGenerator* idGenerator;
 

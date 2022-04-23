@@ -199,6 +199,9 @@ void TaskEditorForm::editCategoryButtonClicked()
 {
     currentCategory = &tempTasks[viewIDXtoTaskIDX[ui->viewList->currentRow()].first];
 
+    for(const Task& t : *currentCategory)
+        taskDescs.insert(t.getName(), t.getDescription());
+
     ui->catIDLabel->setText("<b>" + currentCategory->getID() + "</b>");
     ui->categoryNameLineEdit->setText(currentCategory->getName());
     ui->editorStack->setCurrentIndex(1);
@@ -229,6 +232,7 @@ void TaskEditorForm::deleteTaskButtonClicked()
 void TaskEditorForm::cancelCatChangeClicked()
 {
     currentCategory = nullptr;
+    taskDescs.clear();
     ui->taskList->clear();
     ui->editorStack->setCurrentIndex(0);
 }
@@ -262,8 +266,17 @@ void TaskEditorForm::catConfirmClicked()
 
         for(int i = 0; i < ui->taskList->count(); ++i)
         {
-            Task t("T_" + idGenerator->get(), ui->taskList->item(i)->text());
+            QString name = ui->taskList->item(i)->text();
+            QString desc = "";
+            if(taskDescs.contains(name))
+            {
+                desc = taskDescs[name];
+            }
+
+            Task t("T_" + idGenerator->get(), name, desc);
             currentCategory->append(t);
+
+
         }
 
         currentCategory = nullptr;
