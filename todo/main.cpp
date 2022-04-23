@@ -1,3 +1,13 @@
+/* ----------------------------------------------------
+ * Filename: main.cpp
+ * Project: Todo
+ * Licence: GPL
+ * ----------------------------------------------------
+ * Description:
+ * Starts the QApplication. This file was automatically generated
+ * by Qt Creator.
+ */
+
 #include "mainwindow.h"
 
 #include <QApplication>
