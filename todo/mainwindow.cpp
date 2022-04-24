@@ -32,6 +32,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     form = new TaskEditorForm();
     QObject::connect(form, &TaskEditorForm::tasksSaved, this, &MainWindow::tasksChanged);
+    QObject::connect(this, &MainWindow::editorOpened, form, &TaskEditorForm::openWindow);
 
 }
 
@@ -45,6 +46,7 @@ MainWindow::~MainWindow()
 // Listener for edit button press
 void MainWindow::editorButtonClicked()
 {
+    emit editorOpened();
     form->populateForms(this->tasks);
     form->show();
 }

@@ -52,6 +52,10 @@ public:
     // Loads Tasks from a QVector
     void loadTasks(QVector<TaskCategory> tasks);
 
+signals:
+    // Signal for when the editor form is entered
+    void editorOpened();
+
 private slots:
     // Listener for edit button press
     void editorButtonClicked();

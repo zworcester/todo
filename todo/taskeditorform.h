@@ -80,6 +80,8 @@ public slots:
     void addTaskButtonClicked();
     // Listener for when the Category Change Confirm button pressed.
     void catConfirmClicked();
+    // Listener for when the Category Change Confirm button pressed.
+    void openWindow();
 
     virtual void closeEvent(QCloseEvent* event) override;
 

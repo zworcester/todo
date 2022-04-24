@@ -228,6 +228,7 @@ void TaskEditorForm::editCategoryButtonClicked()
         ui->categoryNameLineEdit->setText(currentCategory->getName());
         ui->editorStack->setCurrentIndex(1);
 
+        ui->taskList->clear();
         for(const Task& task : *currentCategory)
             ui->taskList->addItem(task.getName());
     }
@@ -312,3 +313,8 @@ void TaskEditorForm::closeEvent(QCloseEvent* event)
     QWidget::closeEvent(event);
 }
 
+void TaskEditorForm::openWindow()
+{
+    ui->editorStack->setCurrentIndex(0);
+    ui->listViewStack->setCurrentIndex(0);
+}
