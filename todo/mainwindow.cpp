@@ -122,6 +122,7 @@ void MainWindow::openActionTriggered()
         p.read();
 
         loadTasks(p.getReadDataVector());
+        f.close();
     }
 
 }
@@ -145,6 +146,7 @@ void MainWindow::saveActionTriggered()
         Serializer s;
         QJsonDocument d = s.write(tasks);
         f.write(d.toJson());
+        f.close();
     }
 
 }
